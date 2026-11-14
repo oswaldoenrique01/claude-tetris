@@ -44,24 +44,76 @@ jobs:
 
             2. LABELS
                - Obtén los labels válidos con `gh label list`. Usa SOLO labels que ya existan. Nunca crees labels.
+               - Respeta el tipo que declara quien abre el issue: si el título o el cuerpo dicen "bug", "error", "falla" o "no funciona",
+                 el label de tipo es `bug`, aunque el origen sea estético (menciónalo en la causa probable). Usa `enhancement` solo si pide algo nuevo
+                 o un cambio que no se describe como fallo. Ante duda entre `bug` y `enhancement`, gana lo que dice el issue.
                - Asigna exactamente un label de tipo (`bug`, `enhancement`, `documentation`, `question`, `duplicate`, `invalid`...),
                  al menos un `area:*` (`area:gameplay`, `area:ui`, `area:render`) y exactamente un `priority:*`.
                - Aplica con `gh issue edit ${{ github.event.issue.number }} --add-label "a,b,c"`.
                - Si el evento es `edited`, quita con `--remove-label` los labels `area:*`, `priority:*` y de tipo que tú pusiste antes y que ya no apliquen. No toques labels puestos manualmente por personas (p. ej. `good first issue`, `help wanted`, `wontfix`).
 
             3. DIAGNÓSTICO
-               Escribe un comentario que empiece con la línea `<!-- claude-triage -->` y contenga:
-               - **Resumen** del problema.
-               - **Causa probable** (o análisis de la necesidad si es una feature).
-               - **Código implicado**: archivos y funciones con referencia `game.js:línea` (p. ej. `clearLines`, `tryRotate`, `lockPiece`).
-               - **Propuesta de solución**: pasos concretos para implementarla.
-               - **Riesgos / efectos secundarios**.
-               - **Preguntas abiertas** si falta información para reproducir o decidir.
+               El comentario debe estar en Markdown de GitHub (GFM) y seguir EXACTAMENTE esta plantilla.
+               La primera línea es el marcador (GitHub no lo muestra). Deja una línea en blanco entre bloques.
+               Código con backticks y referencias `archivo:línea`. No uses HTML aparte de `<details>` y el marcador.
+
+               <!-- claude-triage -->
+               ## <título según el tipo>
+
+               | Campo | Valor |
+               | --- | --- |
+               | Tipo | `bug` / `enhancement` / ... |
+               | Área | `area:gameplay` / `area:ui` / `area:render` |
+               | Prioridad | `priority:high` / `priority:medium` / `priority:low` |
+               | Confianza | alta / media / baja |
+
+               ### Resumen
+               Una o dos frases.
+
+               ### Causa probable
+               Para un bug: la causa. Para una feature: la necesidad y su alcance.
+
+               ### Código implicado
+               - [`game.js:123`](https://github.com/${{ github.repository }}/blob/main/game.js#L123) `nombreFuncion`: qué hace aquí.
+
+               ### Propuesta de solución
+               1. Paso concreto.
+               2. Paso concreto.
+
+               ### Riesgos
+               - Efecto secundario posible.
+
+               ### Preguntas abiertas
+               - [ ] Pregunta pendiente (omite la sección si no hay).
+
+               <details>
+               <summary>Cómo reproducir / verificar</summary>
+
+               Pasos para comprobar el arreglo en el navegador.
+
+               </details>
+
+               El título `##` depende del label de tipo: `bug` → `## 🐞 Diagnóstico del bug`; `enhancement` → `## ✨ Análisis de la mejora`;
+               `documentation` → `## 📚 Análisis de documentación`; `question` → `## ❓ Respuesta a la pregunta`;
+               otro → `## 🤖 Diagnóstico automático`. En una `question`, responde directamente en Resumen y omite Propuesta y Riesgos.
+
+               Los valores de la tabla deben coincidir con los labels que aplicaste en el paso 2.
                Este diagnóstico lo usará el equipo para implementar la solución: sé específico y verificable.
 
             4. UN SOLO COMENTARIO
-               - Busca un comentario existente con el marcador: `gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/comments --paginate`.
-               - Si existe, actualízalo: `gh api -X PATCH repos/${{ github.repository }}/issues/comments/<ID> -f body="<nuevo diagnóstico>"`.
-               - Si no existe, créalo con `gh issue comment ${{ github.event.issue.number }} --body "<diagnóstico>"`.
+               Pasa el cuerpo con un heredoc de delimitador entrecomillado (`<<'EOF'`) para que saltos de línea,
+               backticks y comillas lleguen intactos. Nunca metas el cuerpo entre comillas simples o dobles en una sola línea.
+               - Busca el comentario existente:
+                 `gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/comments --paginate --jq '.[] | select(.body | startswith("<!-- claude-triage -->")) | .id'`
+               - Si devuelve un ID, actualízalo:
+                 `gh api -X PATCH repos/${{ github.repository }}/issues/comments/<ID> -f body="$(cat <<'EOF'`
+                 `...diagnóstico...`
+                 `EOF`
+                 `)"`
+               - Si no devuelve nada, créalo:
+                 `gh issue comment ${{ github.event.issue.number }} --body "$(cat <<'EOF'`
+                 `...diagnóstico...`
+                 `EOF`
+                 `)"`
 
             5. No modifiques código, no cierres el issue, no hagas commits.

@@ -150,3 +150,15 @@ kbd {
 #restart-btn:hover {
   background: #9bbdff;
 }
+
+/* ---- Menu de pausa ---- */
+.hidden { display: none !important; }
+#pause-title { font-size: 28px; font-weight: 800; letter-spacing: 4px; color: #e57373; }
+.pause-list { display: flex; flex-direction: column; gap: 10px; align-items: stretch; min-width: 220px; }
+.menu-btn { background: #7aa2f7; color: #0f0f17; border: none; border-radius: 6px; padding: 10px 28px; font-size: 14px; font-weight: 700; cursor: pointer; letter-spacing: 1px; transition: background 0.15s; }
+.menu-btn:hover, .menu-btn:focus-visible { background: #9bbdff; outline: 2px solid #e0e0e0; outline-offset: 2px; }
+.menu-btn.small { padding: 6px 12px; }
+.level-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.level-row .value { font-size: 20px; min-width: 28px; text-align: center; }
+.controls-list { list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 13px; color: #aaa; text-align: left; }
+.hint { font-size: 11px; color: #555570; }

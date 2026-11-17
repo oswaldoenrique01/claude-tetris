@@ -50,8 +50,37 @@
         <button id="restart-btn">Reiniciar</button>
       </div>
     </div>
+
+    <div id="pause-menu" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="pause-title">
+      <div class="overlay-box pause-box">
+        <p id="pause-title">PAUSA</p>
+        <div id="pause-main" class="pause-list">
+          <button type="button" class="menu-btn" id="pm-resume">Reanudar</button>
+          <button type="button" class="menu-btn" id="pm-restart">Reiniciar</button>
+          <div class="level-row" id="pm-level-row">
+            <span class="label">NIVEL INICIAL</span>
+            <button type="button" class="menu-btn small" id="pm-level-dec" aria-label="Bajar nivel inicial">&lt;</button>
+            <span class="value" id="pm-level-value">1</span>
+            <button type="button" class="menu-btn small" id="pm-level-inc" aria-label="Subir nivel inicial">&gt;</button>
+          </div>
+          <button type="button" class="menu-btn" id="pm-controls">Ver controles</button>
+        </div>
+        <div id="pause-controls" class="pause-list hidden">
+          <ul class="controls-list">
+            <li><kbd>←</kbd><kbd>→</kbd> mover</li>
+            <li><kbd>↑</kbd> / <kbd>X</kbd> rotar</li>
+            <li><kbd>↓</kbd> bajar</li>
+            <li><kbd>Space</kbd> caída</li>
+            <li><kbd>P</kbd> / <kbd>Esc</kbd> pausa</li>
+          </ul>
+          <button type="button" class="menu-btn" id="pm-back">Volver</button>
+        </div>
+        <p class="hint">El nivel inicial se aplica al reiniciar</p>
+      </div>
+    </div>
   </div>
 
   <script src="game.js"></script>
+  <script src="pause-menu.js"></script>
 </body>
 </html>

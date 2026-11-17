@@ -25,3 +25,5 @@ Tres archivos; toda la lógica está en `game.js` (script global, `'use strict'`
 
 - Cambiar `COLS`/`ROWS`/`BLOCK` exige ajustar `width`/`height` de `<canvas id="board">` en `index.html` (`COLS*BLOCK` × `ROWS*BLOCK`).
 - `drawNext` usa tamaño de bloque fijo 30 sobre una cuadrícula de 4×4.
+
+- `pause-menu.js` (cargado tras `game.js`, usa sus globals): menu `#pause-menu` con P/Escape, bloqueo de teclas (listener en captura) y `startLevel` (localStorage `tetris.startLevel`). `game.js` llama `PauseMenu.setOpen()` desde `togglePause`/`init`.

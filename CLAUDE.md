@@ -12,7 +12,7 @@ Abrir `index.html` directamente, o servidor estático: `python -m http.server 80
 
 ## Arquitectura
 
-Cuatro archivos; la lógica del juego está en `game.js`; `records.js` (carga después, define `Records`: localStorage `tetris.records`, pantalla de inicio `#start-screen`, nombre y tabla en game over; el botón Jugar llama a `init()`) (script global, `'use strict'`, estado en variables `let` de módulo):
+Cinco archivos; la lógica del juego está en `game.js` (script global, `'use strict'`, estado en variables `let` de módulo). `skins.js` (ver Skins), `pause-menu.js` y `records.js` se cargan después; `records.js` define `Records`: localStorage `tetris.records`, pantalla de inicio `#start-screen`, nombre y tabla en game over; el botón Jugar llama a `init()`:
 
 - `index.html` define `#board` (300×600), `#next-canvas` (120×120), HUD (`#score`, `#lines`, `#level`) y `#overlay` (pausa/game over). `game.js` los obtiene por id al cargar, así que renombrar ids rompe el juego.
 - Tablero: matriz `ROWS×COLS`; `0` = vacío, `1–7` = índice en `COLORS`/`PIECES` (el mismo índice identifica tipo de pieza y color).
@@ -20,6 +20,8 @@ Cuatro archivos; la lógica del juego está en `game.js`; `records.js` (carga de
 - `clearLines()` actualiza score/nivel/`dropInterval` (`max(100, 1000 − (level−1)*90)`); nivel sube cada 10 líneas.
 - Rotación: `rotateCW` + kicks horizontales `[0,-1,1,-2,2]` en `tryRotate`. Ghost piece vía `ghostY()`.
 - Pausa cancela/reanuda el rAF manualmente (`togglePause`); `endGame` también cancela el rAF; `init` es el reinicio.
+
+- Skins: `skins.js` (cargado por `<script>` ANTES de `game.js`) define `SKINS` (`retro|neon|pastel|pixel`; cada una con `colors[8]`, `background`, `grid`, `drawBlock`), `loadSkinName`/`saveSkinName` (`localStorage` `tetris.skin`). `game.js` `applySkin(name)` fija `skin`, `COLORS` y clase `skin-<name>` en `<body>`; `drawBlock` delega en `skin`. Selector `#skin-select` (se rellena desde `SKINS`) redibuja `draw()`+`drawNext()`.
 
 ## Notas
 

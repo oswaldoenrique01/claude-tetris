@@ -4,7 +4,7 @@ const COLS = 10;
 const ROWS = 20;
 const BLOCK = 30;
 
-const COLORS = [
+let COLORS = [
   null,
   '#4dd0e1', // I - cyan
   '#ffd54f', // O - yellow
@@ -39,6 +39,16 @@ const overlay = document.getElementById('overlay');
 const overlayTitle = document.getElementById('overlay-title');
 const overlayScore = document.getElementById('overlay-score');
 const restartBtn = document.getElementById('restart-btn');
+
+let skin = SKINS[DEFAULT_SKIN];
+const skinSelect = document.getElementById('skin-select');
+
+function applySkin(name) {
+  skin = SKINS[name];
+  COLORS = skin.colors;
+  for (const k of Object.keys(SKINS)) document.body.classList.toggle('skin-' + k, k === name);
+  skinSelect.value = name;
+}
 
 const START_LEVELS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15];
 let startLevel = 1;
@@ -169,19 +179,11 @@ function updateHUD() {
 }
 
 function drawBlock(context, x, y, colorIndex, size, alpha) {
-  if (!colorIndex) return;
-  const color = COLORS[colorIndex];
-  context.globalAlpha = alpha ?? 1;
-  context.fillStyle = color;
-  context.fillRect(x * size + 1, y * size + 1, size - 2, size - 2);
-  // highlight
-  context.fillStyle = 'rgba(255,255,255,0.12)';
-  context.fillRect(x * size + 1, y * size + 1, size - 2, 4);
-  context.globalAlpha = 1;
+  skin.drawBlock(context, x, y, colorIndex, size, alpha);
 }
 
 function drawGrid() {
-  ctx.strokeStyle = '#22222e';
+  ctx.strokeStyle = skin.grid;
   ctx.lineWidth = 0.5;
   for (let c = 1; c < COLS; c++) {
     ctx.beginPath();
@@ -198,7 +200,8 @@ function drawGrid() {
 }
 
 function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = skin.background;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
   drawGrid();
 
   // board
@@ -221,7 +224,8 @@ function draw() {
 
 function drawNext() {
   const NB = 30;
-  nextCtx.clearRect(0, 0, nextCanvas.width, nextCanvas.height);
+  nextCtx.fillStyle = skin.background;
+  nextCtx.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
   const shape = next.shape;
   const offX = Math.floor((4 - shape[0].length) / 2);
   const offY = Math.floor((4 - shape.length) / 2);
@@ -291,6 +295,7 @@ function init() {
 
 document.addEventListener('keydown', e => {
   if (e.target && /^(INPUT|TEXTAREA)$/.test(e.target.tagName)) return;
+  if (e.target === skinSelect && e.code !== 'KeyP') { skinSelect.blur(); return; }
   if (paused || gameOver) return;
   switch (e.code) {
     case 'ArrowLeft':
@@ -315,3 +320,13 @@ document.addEventListener('keydown', e => {
 });
 
 restartBtn.addEventListener('click', init);
+
+skinSelect.innerHTML = Object.keys(SKINS)
+  .map(k => `<option value="${k}">${SKINS[k].label}</option>`).join('');
+skinSelect.addEventListener('change', () => {
+  applySkin(skinSelect.value);
+  saveSkinName(skinSelect.value);
+  skinSelect.blur();
+  if (board) { draw(); drawNext(); }
+});
+applySkin(loadSkinName());

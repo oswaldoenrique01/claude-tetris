@@ -232,3 +232,31 @@ kbd {
 }
 
 .btn-danger:hover { background: rgba(229, 115, 115, 0.15); }
+
+/* ---- Skins ---- */
+#skin-select {
+  background: #22223a;
+  color: #e0e0e0;
+  border: 1px solid #3a3a5a;
+  border-radius: 4px;
+  padding: 4px 6px;
+  font-size: 12px;
+  font-family: inherit;
+}
+
+body.skin-neon { background: #05050a; }
+body.skin-neon #board,
+body.skin-neon #next-canvas { background: #000; border-color: #00f0ff; box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); }
+body.skin-neon .value { color: #39ff14; text-shadow: 0 0 8px #39ff14; }
+
+body.skin-pastel { background: #f3e9f7; color: #5a4a6a; }
+body.skin-pastel #board,
+body.skin-pastel #next-canvas { background: #fdf6ee; border-color: #d9c8e6; box-shadow: 0 0 30px rgba(180, 150, 200, 0.3); }
+body.skin-pastel .label { color: #9a8aaa; }
+body.skin-pastel .value { color: #8a6fb0; }
+body.skin-pastel .controls li { color: #7a6a8a; }
+
+body.skin-pixel { background: #0b1230; }
+body.skin-pixel #board,
+body.skin-pixel #next-canvas { background: #1d2b53; border-color: #ff77a8; border-radius: 0; image-rendering: pixelated; }
+body.skin-pixel .value { color: #ffec27; }

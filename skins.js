@@ -78,7 +78,7 @@ const SKINS = {
     grid: '#26376b',
     drawBlock(context, x, y, colorIndex, size, alpha) {
       if (!colorIndex) return;
-      const px = x * size, py = y * size, n = 5, u = (size - 2) / n;
+      const px = x * size, py = y * size, n = 5, u = Math.floor((size - 2) / n);
       context.globalAlpha = alpha ?? 1;
       context.fillStyle = this.colors[colorIndex];
       context.fillRect(px + 1, py + 1, size - 2, size - 2);

@@ -46,7 +46,7 @@ const skinSelect = document.getElementById('skin-select');
 function applySkin(name) {
   skin = SKINS[name];
   COLORS = skin.colors;
-  document.body.className = 'skin-' + name;
+  for (const k of Object.keys(SKINS)) document.body.classList.toggle('skin-' + k, k === name);
   skinSelect.value = name;
 }
 
@@ -279,6 +279,7 @@ function init() {
 }
 
 document.addEventListener('keydown', e => {
+  if (e.target === skinSelect && e.code !== 'KeyP') { skinSelect.blur(); return; }
   if (e.code === 'KeyP') { togglePause(); return; }
   if (paused || gameOver) return;
   switch (e.code) {

@@ -40,7 +40,8 @@ const overlayTitle = document.getElementById('overlay-title');
 const overlayScore = document.getElementById('overlay-score');
 const restartBtn = document.getElementById('restart-btn');
 
-let board, current, next, score, lines, level, paused, gameOver, lastTime, dropAccum, dropInterval, animId;
+let combo = 0, maxCombo = 0;
+let board, current, next, score, lines, level, paused, gameOver = true, lastTime, dropAccum, dropInterval, animId;
 
 function createBoard() {
   return Array.from({ length: ROWS }, () => new Array(COLS).fill(0));
@@ -104,11 +105,15 @@ function clearLines() {
     }
   }
   if (cleared) {
+    combo++;
+    maxCombo = Math.max(maxCombo, combo);
     lines += cleared;
     score += (LINE_SCORES[cleared] || 0) * level;
     level = Math.floor(lines / 10) + 1;
     dropInterval = Math.max(100, 1000 - (level - 1) * 90);
     updateHUD();
+  } else {
+    combo = 0;
   }
 }
 
@@ -224,6 +229,7 @@ function endGame() {
   overlayTitle.textContent = 'GAME OVER';
   overlayScore.textContent = `Puntuación: ${score.toLocaleString()}`;
   overlay.classList.remove('hidden');
+  Records.onGameOver({ score, lines, level, combo: maxCombo });
 }
 
 function togglePause() {
@@ -263,6 +269,9 @@ function init() {
   level = 1;
   paused = false;
   gameOver = false;
+  combo = 0;
+  maxCombo = 0;
+  Records.hideGameOver();
   dropInterval = 1000;
   dropAccum = 0;
   lastTime = performance.now();
@@ -275,6 +284,7 @@ function init() {
 }
 
 document.addEventListener('keydown', e => {
+  if (e.target && /^(INPUT|TEXTAREA)$/.test(e.target.tagName)) return;
   if (e.code === 'KeyP') { togglePause(); return; }
   if (paused || gameOver) return;
   switch (e.code) {
@@ -300,5 +310,3 @@ document.addEventListener('keydown', e => {
 });
 
 restartBtn.addEventListener('click', init);
-
-init();

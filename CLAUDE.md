@@ -12,7 +12,7 @@ Abrir `index.html` directamente, o servidor estático: `python -m http.server 80
 
 ## Arquitectura
 
-Tres archivos; toda la lógica está en `game.js` (script global, `'use strict'`, estado en variables `let` de módulo):
+Cuatro archivos; la lógica del juego está en `game.js`; `records.js` (carga después, define `Records`: localStorage `tetris.records`, pantalla de inicio `#start-screen`, nombre y tabla en game over; el botón Jugar llama a `init()`) (script global, `'use strict'`, estado en variables `let` de módulo):
 
 - `index.html` define `#board` (300×600), `#next-canvas` (120×120), HUD (`#score`, `#lines`, `#level`) y `#overlay` (pausa/game over). `game.js` los obtiene por id al cargar, así que renombrar ids rompe el juego.
 - Tablero: matriz `ROWS×COLS`; `0` = vacío, `1–7` = índice en `COLORS`/`PIECES` (el mismo índice identifica tipo de pieza y color).

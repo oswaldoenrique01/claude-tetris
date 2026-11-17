@@ -52,6 +52,7 @@ window.PauseMenu = (() => {
   }
 
   document.addEventListener('keydown', e => {
+    if (e.target && /^(INPUT|TEXTAREA)$/.test(e.target.tagName)) return;
     const wasPressed = pressed.has(e.code);
     pressed.add(e.code);
 

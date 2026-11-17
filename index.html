@@ -47,6 +47,16 @@
       <div class="overlay-box">
         <p id="overlay-title">GAME OVER</p>
         <p id="overlay-score"></p>
+        <div id="go-records" class="records hidden">
+          <span class="label">RECORDS</span>
+          <ol id="go-list" class="rec-list"></ol>
+          <p id="go-stats" class="rec-stats"></p>
+          <form id="name-form" class="name-form hidden">
+            <input id="name-input" type="text" maxlength="12" placeholder="Tu nombre" autocomplete="off" />
+            <button type="submit" class="btn">Guardar</button>
+          </form>
+          <button id="reset-go-btn" class="btn btn-danger" type="button">Borrar records</button>
+        </div>
         <button id="restart-btn">Reiniciar</button>
       </div>
     </div>
@@ -78,9 +88,23 @@
         <p class="hint">El nivel inicial se aplica al reiniciar</p>
       </div>
     </div>
+
+    <div id="start-screen" class="overlay">
+      <div class="overlay-box">
+        <p id="start-title">TETRIS</p>
+        <div class="records">
+          <span class="label">RECORDS</span>
+          <ol id="start-list" class="rec-list"></ol>
+          <p id="start-stats" class="rec-stats"></p>
+        </div>
+        <button id="play-btn" class="btn" type="button">Jugar</button>
+        <button id="reset-start-btn" class="btn btn-danger" type="button">Borrar records</button>
+      </div>
+    </div>
   </div>
 
   <script src="game.js"></script>
   <script src="pause-menu.js"></script>
+  <script src="records.js"></script>
 </body>
 </html>

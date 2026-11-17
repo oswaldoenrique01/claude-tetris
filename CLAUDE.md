@@ -21,6 +21,8 @@ Tres archivos; toda la lógica está en `game.js` (script global, `'use strict'`
 - Rotación: `rotateCW` + kicks horizontales `[0,-1,1,-2,2]` en `tryRotate`. Ghost piece vía `ghostY()`.
 - Pausa cancela/reanuda el rAF manualmente (`togglePause`); `endGame` también cancela el rAF; `init` es el reinicio.
 
+- Skins: `skins.js` (cargado por `<script>` ANTES de `game.js`) define `SKINS` (`retro|neon|pastel|pixel`; cada una con `colors[8]`, `background`, `grid`, `drawBlock`), `loadSkinName`/`saveSkinName` (`localStorage` `tetris.skin`). `game.js` `applySkin(name)` fija `skin`, `COLORS` y clase `skin-<name>` en `<body>`; `drawBlock` delega en `skin`. Selector `#skin-select` (se rellena desde `SKINS`) redibuja `draw()`+`drawNext()`.
+
 ## Notas
 
 - Cambiar `COLS`/`ROWS`/`BLOCK` exige ajustar `width`/`height` de `<canvas id="board">` en `index.html` (`COLS*BLOCK` × `ROWS*BLOCK`).

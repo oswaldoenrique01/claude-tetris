@@ -76,6 +76,10 @@ Después abre `http://localhost:8000` en el navegador.
 
 ---
 
+## Skins
+
+Selector **SKIN** en el panel lateral: Retro, Neon, Pastel y Pixel art. Se guarda en `localStorage` (`tetris.skin`). Definidas en `skins.js`.
+
 ## Controles
 
 | Tecla     | Acción                            |

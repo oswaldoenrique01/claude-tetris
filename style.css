@@ -242,3 +242,94 @@ kbd {
   min-width: 80px;
   justify-content: flex-end;
 }
+
+/* ---- Records ---- */
+.hidden {
+  display: none !important;
+}
+
+#overlay-msg {
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffd54f;
+}
+
+#name-form {
+  display: flex;
+  gap: 6px;
+}
+
+#name-input {
+  width: 130px;
+  background: #1a1a25;
+  color: #e0e0e0;
+  border: 1px solid #3a3a5a;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 13px;
+  user-select: text;
+}
+
+#save-btn {
+  background: #81c784;
+  color: #0f0f17;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#records {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  min-width: 220px;
+}
+
+#records-list {
+  list-style: none;
+  width: 100%;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+  color: #aaa;
+}
+
+#records-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+#records-list li.new {
+  background: rgba(255, 213, 79, 0.18);
+  color: #ffd54f;
+  font-weight: 700;
+}
+
+#records-list li.empty {
+  color: #555570;
+}
+
+#records-stats {
+  font-size: 11px;
+  color: #888;
+}
+
+#reset-btn {
+  background: none;
+  border: 1px solid #5a3a3a;
+  color: #e57373;
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+#reset-btn:hover {
+  background: rgba(229, 115, 115, 0.12);
+}

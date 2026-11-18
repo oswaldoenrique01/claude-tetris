@@ -150,3 +150,95 @@ kbd {
 #restart-btn:hover {
   background: #9bbdff;
 }
+
+/* ---- Menú de pausa ---- */
+.menu-box {
+  width: 220px;
+}
+
+.menu-view {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+  width: 100%;
+}
+
+.menu-view.hidden {
+  display: none;
+}
+
+.menu-title {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: #e57373;
+  margin-bottom: 6px;
+}
+
+.menu-btn {
+  background: #22223a;
+  color: #e0e0e0;
+  border: 1px solid #3a3a5a;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: background 0.15s;
+}
+
+.menu-btn:hover,
+.menu-btn:focus-visible {
+  background: #7aa2f7;
+  color: #0f0f17;
+  outline: none;
+}
+
+.menu-btn.small {
+  padding: 4px 14px;
+  font-size: 18px;
+}
+
+.menu-level {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.level-picker {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.hint {
+  font-size: 10px;
+  color: #555570;
+}
+
+.menu-keys {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+  color: #aaa;
+  margin-bottom: 6px;
+}
+
+.menu-keys li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.menu-keys li span {
+  display: inline-flex;
+  gap: 4px;
+  min-width: 80px;
+  justify-content: flex-end;
+}

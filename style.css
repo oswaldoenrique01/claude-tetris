@@ -28,7 +28,7 @@ body {
 #board {
   display: block;
   border: 1px solid #2a2a3a;
-  background: #1a1a25;
+  background: var(--board-bg, #1a1a25);
   border-radius: 4px;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
 }
@@ -66,7 +66,7 @@ body {
 #next-canvas {
   display: block;
   border: 1px solid #2a2a3a;
-  background: #1a1a25;
+  background: var(--board-bg, #1a1a25);
   border-radius: 4px;
 }
 
@@ -332,4 +332,43 @@ kbd {
 
 #reset-btn:hover {
   background: rgba(229, 115, 115, 0.12);
+}
+
+/* ---- Skins ---- */
+.skins {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.skins button {
+  background: #22223a;
+  color: #aaa;
+  border: 1px solid #3a3a5a;
+  border-radius: 4px;
+  padding: 5px 0;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.skins button:hover {
+  border-color: #7aa2f7;
+}
+
+.skins button.active {
+  background: #7aa2f7;
+  color: #0f0f17;
+  border-color: #7aa2f7;
+  font-weight: 700;
+}
+
+body[data-skin="neon"] #board,
+body[data-skin="neon"] #next-canvas {
+  border-color: #00f0ff;
+  box-shadow: 0 0 18px rgba(0, 240, 255, 0.4);
+}
+
+body[data-skin="pastel"] #board,
+body[data-skin="pastel"] #next-canvas {
+  border-color: #d9c8e6;
 }
